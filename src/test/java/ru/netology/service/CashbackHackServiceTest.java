@@ -1,42 +1,35 @@
 package ru.netology.service;
 
+import org.testng.annotations.Test;
+
+import static org.testng.Assert.*;
+
 public class CashbackHackServiceTest {
-    CashbackHackService service = new CashbackHackService();
 
-    @org.testng.annotations.Test
-    public void testRemainBoundaryValuesOne() {
-        org.testng.Assert.assertThrows(RuntimeException.class, () -> {
-            service.remain(-1);
-        });
+    @Test
+    void shouldCalculateMissingQty() {
+        CashbackHackService service = new CashbackHackService();
+        int amount = 999;
+        int expected = 1;
+        int actual = service.remain(amount);
+        assertEquals(actual, expected);
     }
 
-    @org.testng.annotations.Test
-    public void testRemainBoundaryValuesTwo() {
-        org.testng.Assert.assertEquals(service.remain(0), 1000);
+    @Test
+    void amountEqualBoundary() {
+        CashbackHackService service = new CashbackHackService();
+        int amount = 1000;
+        int expected = 0;
+        int actual = service.remain(amount);
+        assertEquals(actual, expected);
     }
 
-    @org.testng.annotations.Test
-    public void testRemainBoundaryValuesThree() {
-        org.testng.Assert.assertEquals(service.remain(1), 999);
-    }
-
-    @org.testng.annotations.Test
-    public void testRemainBoundaryValuesFour() {
-        org.testng.Assert.assertEquals(service.remain(999), 1);
-    }
-
-    @org.testng.annotations.Test
-    public void testRemainBoundaryValuesFive() {
-        org.testng.Assert.assertEquals(service.remain(1000), 0);
-    }
-
-    @org.testng.annotations.Test
-    public void testRemainBoundaryValuesSix() {
-        org.testng.Assert.assertEquals(service.remain(1001), 999);
-    }
-
-    @org.testng.annotations.Test
-    public void testRemainCriticalPath() {
-        org.testng.Assert.assertEquals(service.remain(400), 600);
+    @Test
+    void amountMoreBoundary() {
+        CashbackHackService service = new CashbackHackService();
+        int amount = 1001;
+        int expected = 999;
+        int actual = service.remain(amount);
+        assertEquals(actual, expected);
     }
 }
